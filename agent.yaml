@@ -1,0 +1,63 @@
+apiVersion: kingdom.pal/v1alpha1
+kind: AgentManifest
+
+metadata:
+  id: rick
+  displayName: Rick
+  version: 0.1.0
+  description: Security, permissions and policy enforcement for Kingdom of PAL.
+
+spec:
+  role: security-governor
+  tier: core
+  repository: https://github.com/promptalchemistlabs/pal-agent-rick
+  capabilities:
+    - permission-review
+    - policy-enforcement
+    - privacy-review
+    - security-audit
+  contracts:
+    version: v1alpha1
+    accepts:
+      - task-request
+      - approval-request
+    returns:
+      - task-result
+      - approval-decision
+  permissions:
+    - read:agent-manifests
+    - read:approval-policies
+    - read:audit-metadata
+    - write:security-decisions
+    - block:unauthorised-actions
+  memory:
+    reads:
+      - founders-charter
+      - active-policies
+      - agent-manifests
+      - permission-metadata
+      - audit-metadata
+    writes:
+      - private-security-memory
+      - security-decisions
+      - incident-summaries
+  boundaries:
+    prohibited:
+      - Reveal credentials or sensitive architecture.
+      - Grant itself or another agent additional permissions.
+      - Bypass required founder approval.
+      - Modify production systems directly.
+      - Conceal a material security incident.
+  approval:
+    policy: default-risk-policy
+    requiredFor:
+      - change-permissions
+      - access-credentials
+      - modify-production
+      - share-private-information
+      - any-high-risk-action
+  healthcheck:
+    method: GET
+    path: /health
+  runtime:
+    status: planned
