@@ -4,7 +4,7 @@ kind: AgentManifest
 metadata:
   id: rick
   displayName: Rick
-  version: 0.1.0
+  version: 0.2.0
   description: Security, permissions and policy enforcement for Kingdom of PAL.
 
 spec:
@@ -60,4 +60,6 @@ spec:
     method: GET
     path: /health
   runtime:
-    status: planned
+    status: ready
+    language: javascript
+    entrypoint: src/server.mjs
